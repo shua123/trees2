@@ -22,12 +22,12 @@ var MapsLib = {
   
   //*New Fusion Tables Requirement* API key. found at https://code.google.com/apis/console/   
   //*Important* this key is for demonstration purposes. please register your own.   
-  googleApiKey:       "AIzaSyA3FQFrNr5W2OEVmuENqhb2MBB2JabdaOY",        
+  googleApiKey:       "AIzaSyBZmv4Q6UbEd83q1GXlm6su2tMpwa18yrQ",        
   
   //name of the location column in your Fusion Table. 
   //NOTE: if your location column name has spaces in it, surround it with single quotes 
   //example: locationColumn:     "'my location'",
-  locationColumn:     "geometry",  
+  locationColumn:     "Latitude",  
 
   map_centroid:       new google.maps.LatLng(41.8781136, -87.66677856445312), //center that your map defaults to
   locationScope:      "chicago",      //geographical area appended to all address searches
@@ -48,7 +48,19 @@ var MapsLib = {
       center: MapsLib.map_centroid,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
+
     map = new google.maps.Map($("#map_canvas")[0],myOptions);
+
+    var styles = [
+        {
+          featureType: 'all',
+          elementType: 'all',
+          stylers: [
+            { saturation: -95 }
+          ]
+        }
+      ];
+    map.setOptions({styles: styles});
     
     MapsLib.searchrecords = null;
     
@@ -72,6 +84,14 @@ var MapsLib = {
     var whereClause = MapsLib.locationColumn + " not equal to ''";
     
     //-----custom filters-------
+
+    var type_column = "'CPSS'";
+
+    var searchType = type_column + " IN (-1,";
+    if ( $("#cbType1").is(':checked')) searchType += "0,";
+    if ( $("#cbType2").is(':checked')) searchType += "1,";
+    if ( $("#cbType3").is(':checked')) searchType += "2,";
+    whereClause += " AND " + searchType.slice(0, searchType.length - 1) + ")";
     
     //-------end of custom filters--------
     

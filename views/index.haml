@@ -1,14 +1,12 @@
 .row-fluid
   .span4
+    %h4
+      2012-2013 School Utilization - CPS Formula
     %p
-      This is a demo of
-      %a{:href => "http://derekeder.com"} Derek Eder's
-      %a{:href => "http://derekeder.com/searchable_map_template/"} Searchable Map Template
-      using Google
+      Uses 30 students per classroom as the midpoint for Ideal Enrollment. For more information see the
       = succeed "." do
-        %a{:href => "http://support.google.com/fusiontables/answer/2571232?hl=en&ref_topic=1652595"} Fusion Tables
-      Use this section to give a little context your map. Maybe a link to
-      %a{:href => "#"} read more »
+        %a{:href => "https://docs.google.com/file/d/0B-1S1lEOFwZ7aWVMd1lrSElfMm8/edit"} CPS formula summary
+      
     .well
       %h4
         Address
@@ -29,20 +27,22 @@
 
     .well
       / Once you decide what filter you want, place the HTML code here. The section in the maps_lib.js is also marked. Once you're done, feel free to delete this explanatory section.
-      %h4 Custom filters and views
-      %p
-        Take a look at the
-        %a{:href => "https://github.com/derekeder/FusionTable-Map-Template/wiki/Filter-examples"} wiki
-        to see how to add your own custom filters and views like:
-      %ul
+      %ul.inputs-list.unstyled
         %li
-          %a{:href => "https://github.com/derekeder/FusionTable-Map-Template/wiki/Filter-examples#wiki-checkboxes"} Checkboxes
+          %label.checkbox.inline
+            %input#cbType1{:type => "checkbox"}
+            %span.filter-box.filter-yellow
+            Underutilized
         %li
-          %a{:href => "https://github.com/derekeder/FusionTable-Map-Template/wiki/Filter-examples#wiki-radiobuttons"} Radio buttons
+          %label.checkbox.inline
+            %input#cbType2{:type => "checkbox"}
+            %span.filter-box.filter-green
+            Efficient
         %li
-          %a{:href => "https://github.com/derekeder/FusionTable-Map-Template/wiki/Filter-examples#wiki-textsearches"} Text searches
-        %li
-          %a{:href => "https://github.com/derekeder/FusionTable-Map-Template/wiki/List-search-results"} Results lists
+          %label.checkbox.inline
+            %input#cbType3{:type => "checkbox"}
+            %span.filter-box.filter-red
+            Overcrowded
 
     %p.alert.alert-info.lead#result_count
 
