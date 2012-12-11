@@ -3,7 +3,7 @@
     %h4
       2012-2013 School Utilization - Apples 2 Apples Alternative
     %p
-      Uses 30 students per classroom as the maximum for Ideal Enrollment. For more information see
+      Uses 30 students/classroom as the maximum for Ideal Enrollment. For more information see
       %a{:href => "http://ilraiseyourhand.org"} Raise Your Hand's
       Apples 2 Apples
       = succeed "." do
@@ -29,6 +29,8 @@
 
     .well
       / Once you decide what filter you want, place the HTML code here. The section in the maps_lib.js is also marked. Once you're done, feel free to delete this explanatory section.
+      %h4
+        Space Use Status
       %ul.inputs-list.unstyled
         %li
           %label.checkbox.inline
@@ -51,6 +53,12 @@
   .span8
     #map_canvas
     %span.pull-right
+      Data provided by
+      = succeed "." do
+        %a{:href => "http://ilraiseyourhand.org"} Raise Your Hand
+      Map by
+      = succeed "." do
+        %a{:href => "https://twitter.com/shua123"} Josh Kalov
       %a{:href => "http://derekeder.com/searchable_map_template/"} Searchable Map Template
       by
       = succeed "." do
