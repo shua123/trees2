@@ -1,0 +1,111 @@
+.row-fluid
+  .span4
+    %h4
+      2012-2013 School Utilization - Apples 2 Apples Alternative
+    %p
+      Uses 30 students per classroom as the maximum for Ideal Enrollment. For more information see
+      %a{:href => "http://ilraiseyourhand.org"} Raise Your Hand's
+      Apples 2 Apples
+      = succeed "." do
+        %a{:href => "http://cpsapples2apples.wordpress.com/2012/12/04/spaceutilization-show-your-work-part-2/"} Explanation
+      
+    .well
+      %h4
+        Address
+        <small>(<a id='find_me' href='#'>find me</a>)</small>
+
+      %input#search_address.input-block-level{:placeholder => "Enter an address or an intersection", :type => "text"}
+      
+      %label
+        within
+        %select#search_radius.input-small
+          %option{:value => "400"} 2 blocks
+          %option{:value => "805"} 1/2 mile
+          %option{:value => "1610"} 1 mile
+          %option{:value => "3220"} 2 miles
+      
+      %input#search.btn.btn-primary{:type => "button", :value => "Search"}
+      %button#reset.btn Reset
+
+    .well
+      / Once you decide what filter you want, place the HTML code here. The section in the maps_lib.js is also marked. Once you're done, feel free to delete this explanatory section.
+      %ul.inputs-list.unstyled
+        %li
+          %label.checkbox.inline
+            %input#cbType1{:type => "checkbox"}
+            %span.filter-box.filter-yellow
+            Underutilized
+        %li
+          %label.checkbox.inline
+            %input#cbType2{:type => "checkbox"}
+            %span.filter-box.filter-green
+            Efficient
+        %li
+          %label.checkbox.inline
+            %input#cbType3{:type => "checkbox"}
+            %span.filter-box.filter-red
+            Overcrowded
+
+    %p.alert.alert-info.lead#result_count
+
+  .span8
+    #map_canvas
+    %span.pull-right
+      %a{:href => "http://derekeder.com/searchable_map_template/"} Searchable Map Template
+      by
+      = succeed "." do
+        %a{:href => "http://derekeder.com"} Derek Eder
+
+- content_for :javascripts do
+  = include_javascript :"jquery.address.min"
+  = include_javascript :"http://maps.google.com/maps/api/js?sensor=false&amp;libraries=places"
+  = include_javascript "jquery.geocomplete.min"
+  %script{:src => "/javascripts/maps_lib_a2a.js?1", :type => "text/javascript"}
+
+  :javascript
+    $(window).resize(function () {
+      var h = $(window).height(),
+        offsetTop = 90; // Calculate the top offset
+    
+      $('#map_canvas').css('height', (h - offsetTop));
+    }).resize();
+    
+    $(function() {
+      MapsLib.initialize();
+      $("#search_address").geocomplete();
+
+      $(':checkbox').click(function(){
+        MapsLib.doSearch();
+      });
+
+      $(':radio').click(function(){
+        MapsLib.doSearch();
+      });
+      
+      $('#search_radius').change(function(){
+        MapsLib.doSearch();
+      });
+      
+      $('#search').click(function(){
+        MapsLib.doSearch();
+      });
+      
+      $('#find_me').click(function(){
+        MapsLib.findMe(); 
+        return false;
+      });
+      
+      $('#reset').click(function(){
+        $.address.parameter('address','');
+        MapsLib.initialize(); 
+        return false;
+      });
+      
+      $(":text").keydown(function(e){
+          var key =  e.keyCode ? e.keyCode : e.which;
+          if(key == 13) {
+              $('#search').click();
+              return false;
+          }
+      });
+    });
