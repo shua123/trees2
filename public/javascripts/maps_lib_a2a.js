@@ -142,6 +142,7 @@ var MapsLib = {
     });
     MapsLib.searchrecords.setMap(map);
     MapsLib.getCount(whereClause);
+    MapsLib.getList(whereClause);
   },
   
   clearSearch: function() {
@@ -151,6 +152,30 @@ var MapsLib = {
       MapsLib.addrMarker.setMap(null);  
     if (MapsLib.searchRadiusCircle != null)
       MapsLib.searchRadiusCircle.setMap(null);
+  },
+
+  setResultsView: function(view_mode) {
+    var element = $('#view_mode');
+    if (view_mode == undefined)
+      view_mode = 'map';
+
+    if (view_mode == 'map') {
+      $('#listCanvas').hide();
+      $('#map_canvas').show();
+      google.maps.event.trigger(map, 'resize');
+      map.setCenter(MapsLib.map_centroid);
+      MapsLib.doSearch();
+
+      element.html('Show list <i class="icon-list icon-white"></i>');
+    }
+    else {
+      $('#listCanvas').show();
+      $('#map_canvas').hide();
+
+      element.html('Show map <i class="icon-map-marker icon-white"></i>');
+
+    }
+    return false;
   },
   
   findMe: function() {
@@ -239,6 +264,42 @@ var MapsLib = {
       });
     $( "#result_count" ).fadeIn();
   },
+
+  getList: function(whereClause) {
+  var selectColumns = "'Name of School (Alt)', '2012-13 20th Day Enrollment','School Type', 'Space Utilization Index (CPS)', 'Apples to Apples Space Utilization Index', 'Space Use Status (CPS)', 'Apples to Apples Space Use Status'";
+  MapsLib.query(selectColumns, whereClause, "MapsLib.displayList");
+},
+
+displayList: function(json) {
+  MapsLib.handleError(json);
+  var data = json["rows"];
+  var template = "";
+
+  var results = $("#resultsList");
+  results.hide().empty(); //hide the existing list and empty it out first
+
+  if (data == null) {
+    //clear results list
+    results.append("<li><span class='lead'>No results found</span></li>");
+  }
+  else {
+    for (var row in data) {
+      template = "\
+        <div class='row-fluid item-list'>\
+          <div class='span12'>\
+            <strong>" + data[row][0] + "</strong> " + data[row][2] + "\
+            <br />Enrollment: " + data[row][1] + "\
+            <br />Space Utilization Index:   <b>CPS:</b> " + data[row][3] + "   <b>A2A:</b> " + data[row][4] + "\
+            <br />Space Use Status:   <b>CPS:</b> " + data[row][5] + "   <b>A2A:</b> " + data[row][6] + "\
+            <br />\
+            <br />\
+          </div>\
+        </div>"
+      results.append(template);
+    }
+  }
+  results.fadeIn();
+},
   
   addCommas: function(nStr) {
     nStr += '';

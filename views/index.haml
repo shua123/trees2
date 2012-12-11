@@ -21,6 +21,10 @@
           %option{:value => "805"} 1/2 mile
           %option{:value => "1610"} 1 mile
           %option{:value => "3220"} 2 miles
+
+      .pull-right
+        %button#view_mode.btn.btn-info 
+          Show list
       
       %input#search.btn.btn-primary{:type => "button", :value => "Search"}
       %button#reset.btn Reset
@@ -46,10 +50,16 @@
             %span.filter-box.filter-red
             Overcrowded
 
+
     %p.alert.alert-info.lead#result_count
 
+
   .span8
+    #listCanvas{:style => "display: none;"}
+      #resultsList
+
     #map_canvas
+
     %span.pull-right
       Data provided by
       = succeed "." do
@@ -104,6 +114,18 @@
       $('#reset').click(function(){
         $.address.parameter('address','');
         MapsLib.initialize(); 
+        return false;
+      });
+
+      $('#view_mode').click(function(){
+        var view_mode = $.address.parameter('view_mode');
+        if (view_mode == 'list')
+          view_mode = 'map';
+        else
+          view_mode = 'list';
+
+        $.address.parameter('view_mode', view_mode);
+        MapsLib.setResultsView(view_mode);
         return false;
       });
       
