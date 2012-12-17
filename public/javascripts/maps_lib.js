@@ -95,9 +95,9 @@ var MapsLib = {
     var type_column = "gradetype";
 
     var searchType = type_column + " IN (-1,";
-    if ( $("#cbType1").is(':checked')) searchType += "1, 2, 3, ";
-    if ( $("#cbType2").is(':checked')) searchType += "2, 3, 4, 5, ";
-    if ( $("#cbType3").is(':checked')) searchType += "3, 5, 6, ";
+    if ( $("#cbType1").is(':checked')) searchType += "1, 2, 3,";
+    if ( $("#cbType2").is(':checked')) searchType += "2, 3, 4, 5,";
+    if ( $("#cbType3").is(':checked')) searchType += "3, 5, 6,";
     whereClause += " AND " + searchType.slice(0, searchType.length - 1) + ")";
 
 
