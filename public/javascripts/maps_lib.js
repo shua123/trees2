@@ -92,12 +92,15 @@ var MapsLib = {
     
     //-----custom filters-------
 
-    var type_column = "'gradetype'";
+    var type_column = "gradetype";
 
-    if ( $("#rbType1").is(':checked')) whereClause += " AND " + type_column + "=1,2,3";
-    if ( $("#rbType2").is(':checked')) whereClause += " AND " + type_column + "=2,3,4,5";
-    if ( $("#rbType3").is(':checked')) whereClause += " AND " + type_column + "=3,5,6";
-    
+    var searchType = type_column + " IN (-1,";
+    if ( $("#cbType1").is(':checked')) searchType += "1, 2, 3, ";
+    if ( $("#cbType2").is(':checked')) searchType += "2, 3, 4, 5, ";
+    if ( $("#cbType3").is(':checked')) searchType += "3, 5, 6, ";
+    whereClause += " AND " + searchType.slice(0, searchType.length - 1) + ")";
+
+
 
     //location type filter
     if ( $("#filter_type").val() != "") {
