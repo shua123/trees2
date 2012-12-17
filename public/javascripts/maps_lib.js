@@ -18,7 +18,7 @@ var MapsLib = {
   
   //the encrypted Table ID of your Fusion Table (found under File => About)
   //NOTE: numeric IDs will be depricated soon
-  fusionTableId:      "1u-nF7FACEmDr9SN2Mm26Td5-UcP1p3ee0wwlV78",  
+  fusionTableId:      "1zaVRv2tjSA8F4kPs83QQh5mFBIM81OobQXrw2u4",  
   
   //*New Fusion Tables Requirement* API key. found at https://code.google.com/apis/console/   
   //*Important* this key is for demonstration purposes. please register your own.   
@@ -27,7 +27,7 @@ var MapsLib = {
   //name of the location column in your Fusion Table. 
   //NOTE: if your location column name has spaces in it, surround it with single quotes 
   //example: locationColumn:     "'my location'",
-  locationColumn:     "Latitude",  
+  locationColumn:     "location",  
 
   map_centroid:       new google.maps.LatLng(41.8781136, -87.66677856445312), //center that your map defaults to
   locationScope:      "chicago",      //geographical area appended to all address searches
@@ -74,6 +74,9 @@ var MapsLib = {
 
     if ($.address.parameter('view_mode') != undefined)
       MapsLib.setResultsView($.address.parameter('view_mode'));
+
+    var filter_type = MapsLib.convertToPlainString($.address.parameter('filter_type'));
+    $("#filter_type").val(filter_type);
      
     //run the default search
     MapsLib.doSearch();
@@ -88,14 +91,22 @@ var MapsLib = {
     
     //-----custom filters-------
 
-    var type_column = "CPSS";
+    //var type_column = "CPSS";
 
-    var searchType = type_column + " IN (-1,";
-    if ( $("#cbType1").is(':checked')) searchType += "0,";
-    if ( $("#cbType2").is(':checked')) searchType += "1,";
-    if ( $("#cbType3").is(':checked')) searchType += "2,";
-    whereClause += " AND " + searchType.slice(0, searchType.length - 1) + ")";
+    //var searchType = type_column + " IN (-1,";
+    //if ( $("#cbType1").is(':checked')) searchType += "0,";
+    //if ( $("#cbType2").is(':checked')) searchType += "1,";
+    //if ( $("#cbType3").is(':checked')) searchType += "2,";
+    //whereClause += " AND " + searchType.slice(0, searchType.length - 1) + ")";
     
+
+    //location type filter
+    if ( $("#filter_type").val() != "") {
+      whereClause += " AND organization_type = '" + $("#filter_type").val() + "'";
+      $.address.parameter('filter_type', encodeURIComponent($("#filter_type").val()));
+    }
+    else $.address.parameter('filter_type', '');
+
     //-------end of custom filters--------
     
     if (address != "") {
@@ -140,7 +151,9 @@ var MapsLib = {
       query: {
         from:   MapsLib.fusionTableId,
         select: MapsLib.locationColumn,
-        where:  whereClause
+        where:  whereClause,
+        styleId: 2
+
       }
     });
     MapsLib.searchrecords.setMap(map);

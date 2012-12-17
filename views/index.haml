@@ -1,11 +1,8 @@
 .row-fluid
   .span4
     %h4
-      2012-2013 School Utilization - CPS Formula
-    %p
-      Uses 30 students/classroom as the midpoint for Ideal Enrollment. For more information see the
-      = succeed "." do
-        %a{:href => "https://docs.google.com/file/d/0B-1S1lEOFwZ7aWVMd1lrSElfMm8/edit"} CPS formula summary
+      
+    
       
     .well
       %h4
@@ -50,6 +47,20 @@
             %span.filter-box.filter-red
             Overcrowded
 
+      %label 
+        %strong and are …
+        %select#filter_type.input-block-level
+          %option{:value => ""} Any content
+          %option{:value => "Math"} Math
+          %option{:value => "Science"} Science
+          %option{:value => "Chicago Public School"} Chicago Public School
+          %option{:value => "City Colleges of Chicago"} City Colleges of Chicago
+          %option{:value => "Community Technology Center"} Community Technology Center
+          %option{:value => "Senior Center"} Senior Center
+          %option{:value => "WorkForce Center"} WorkForce Center
+          %option{:value => "WorkNet Chicago"} WorkNet Chicago
+          %option{:value => "Youth Career Development Center"} Youth Career Development Center
+
 
     %p.alert.alert-info.lead#result_count
 
@@ -61,9 +72,6 @@
     #map_canvas
 
     %span.pull-right
-      Data provided by
-      = succeed "." do
-        %a{:href => "http://ilraiseyourhand.org"} Raise Your Hand
       Map by
       = succeed "." do
         %a{:href => "https://twitter.com/shua123"} Josh Kalov
@@ -91,6 +99,10 @@
       $("#search_address").geocomplete();
 
       $(':checkbox').click(function(){
+        MapsLib.doSearch();
+      });
+
+      $('#filter_type').change(function(){
         MapsLib.doSearch();
       });
 
