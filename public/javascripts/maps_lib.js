@@ -107,6 +107,8 @@ var MapsLib = {
     }
     else $.address.parameter('filter_type', '');
 
+    
+
     //-------end of custom filters--------
     
     if (address != "") {
