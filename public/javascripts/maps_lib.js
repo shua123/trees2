@@ -286,7 +286,7 @@ var MapsLib = {
   },
   
 getList: function(whereClause) {
-  var selectColumns = "'Name of School (Alt)', '2012-13 20th Day Enrollment','School Type', 'Space Utilization Index (CPS)', 'Apples to Apples Space Utilization Index', 'Space Use Status (CPS)', 'Apples to Apples Space Use Status'";
+  var selectColumns = "program, location, content, description";
   MapsLib.query(selectColumns, whereClause, "MapsLib.displayList");
 },
 
@@ -307,10 +307,10 @@ displayList: function(json) {
       template = "\
         <div class='row-fluid item-list'>\
           <div class='span12'>\
-            <strong>" + data[row][0] + "</strong> " + data[row][2] + "\
-            <br />Enrollment: " + data[row][1] + "\
-            <br />Space Utilization Index:   <b>CPS:</b> " + data[row][3] + "   <b>A2A:</b> " + data[row][4] + "\
-            <br />Space Use Status:   <b>CPS:</b> " + data[row][5] + "   <b>A2A:</b> " + data[row][6] + "\
+            <strong>" + data[row][0] + "</strong> " + "\
+            <br />" + data[row][1] + "\
+            <br />Content: " + data[row][2] + "\
+            <br />Description: " + data[row][3] + "\
             <br />\
             <br />\
           </div>\
