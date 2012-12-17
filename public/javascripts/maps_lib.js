@@ -71,6 +71,7 @@ var MapsLib = {
     else $("#search_radius").val(MapsLib.searchRadius);
     $(":checkbox").attr("checked", "checked");
     $("#result_count").hide();
+    $("#rbType1").attr("checked", "checked");
 
     if ($.address.parameter('view_mode') != undefined)
       MapsLib.setResultsView($.address.parameter('view_mode'));
@@ -91,13 +92,11 @@ var MapsLib = {
     
     //-----custom filters-------
 
-    //var type_column = "CPSS";
+    var type_column = "'gradetype'";
 
-    //var searchType = type_column + " IN (-1,";
-    //if ( $("#cbType1").is(':checked')) searchType += "0,";
-    //if ( $("#cbType2").is(':checked')) searchType += "1,";
-    //if ( $("#cbType3").is(':checked')) searchType += "2,";
-    //whereClause += " AND " + searchType.slice(0, searchType.length - 1) + ")";
+    if ( $("#rbType1").is(':checked')) whereClause += " AND " + type_column + "=1,2,3";
+    if ( $("#rbType2").is(':checked')) whereClause += " AND " + type_column + "=2,3,4,5";
+    if ( $("#rbType3").is(':checked')) whereClause += " AND " + type_column + "=3,5,6";
     
 
     //location type filter
@@ -107,7 +106,7 @@ var MapsLib = {
     }
     else $.address.parameter('filter_type', '');
 
-    
+
 
     //-------end of custom filters--------
     

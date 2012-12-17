@@ -28,24 +28,21 @@
 
     .well
       / Once you decide what filter you want, place the HTML code here. The section in the maps_lib.js is also marked. Once you're done, feel free to delete this explanatory section.
-      %h4
-        Space Use Status
-      %ul.inputs-list.unstyled
-        %li
-          %label.checkbox.inline
-            %input#cbType1{:type => "checkbox"}
-            %span.filter-box.filter-yellow
-            Underutilized
-        %li
-          %label.checkbox.inline
-            %input#cbType2{:type => "checkbox"}
-            %span.filter-box.filter-green
-            Efficient
-        %li
-          %label.checkbox.inline
-            %input#cbType3{:type => "checkbox"}
-            %span.filter-box.filter-red
-            Overcrowded
+      %label 
+        %strong Grades:
+        %ul.inputs-list.unstyled
+          %li
+            %label.radio.inline
+              %input#rbType1{:checked => "", :name => "types", :type => "radio"}/
+              Elementary School
+          %li
+            %label.radio.inline
+              %input#rbType2{:name => "types", :type => "radio"}/
+              Middle School
+          %li
+            %label.radio.inline
+              %input#rbType3{:name => "types", :type => "radio"}/
+              High School
 
       %label 
         %strong Content Type:
